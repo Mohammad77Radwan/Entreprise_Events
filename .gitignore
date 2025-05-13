@@ -1,0 +1,37 @@
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.sublime-*
+
+# Ignore dependency directories
+vendor/
+node_modules/
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore cache
+cache/
+tmp/
+
+# Ignore local development files
+docker/mysql/*.sql
+!docker/mysql/init.sql
+
+# Ignore uploaded files
+/uploads/
+
+# Ignore Composer files
+composer.lock
+
+# Ignore built assets
+/public/assets/build/
