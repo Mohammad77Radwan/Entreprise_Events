@@ -828,3 +828,85 @@ Formulaire permettant aux nouveaux utilisateurs de s’inscrire avec nom d'utili
 ### 10. Formulaire de connexion
 Interface de connexion avec champs pour nom d'utilisateur et mot de passe.
 ![Connexion](../docs/image/Website6.png)
+
+
+
+
+
+```mermaid
+erDiagram
+
+    %% ===================== ENTITIES =====================
+    users {
+        INT id PK "Primary key"
+        VARCHAR(50) username "Unique username"
+        VARCHAR(100) email "Unique email address"
+        VARCHAR(255) password "Hashed password"
+        ENUM('admin', 'organizer', 'employee') role "User role"
+        TIMESTAMP created_at "Account creation date"
+        TIMESTAMP updated_at "Last profile update"
+    }
+
+    organizers {
+        INT id PK "Primary key"
+        INT user_id FK "FK to users.id"
+        VARCHAR(50) first_name "Organizer's first name"
+        VARCHAR(50) last_name "Organizer's last name"
+        VARCHAR(20) phone "Phone number"
+        VARCHAR(50) department "Organizer's department"
+        TIMESTAMP created_at "Creation date"
+        TIMESTAMP updated_at "Last update"
+    }
+
+    participants {
+        INT id PK "Primary key"
+        INT user_id FK "FK to users.id"
+        VARCHAR(50) first_name "Participant's first name"
+        VARCHAR(50) last_name "Participant's last name"
+        VARCHAR(100) email UNIQUE "Participant email"
+        VARCHAR(20) phone "Phone number"
+        VARCHAR(50) department "Department"
+        TIMESTAMP created_at "Creation date"
+        TIMESTAMP updated_at "Last update"
+    }
+
+    events {
+        INT id PK "Primary key"
+        INT organizer_id FK "FK to organizers.id"
+        VARCHAR(100) title "Event title"
+        TEXT description "Detailed description"
+        DATETIME start_datetime "Start of event"
+        DATETIME end_datetime "End of event"
+        VARCHAR(100) location "Event location"
+        INT max_participants "Participant limit"
+        ENUM('planned', 'ongoing', 'completed', 'cancelled') status "Event status"
+        TIMESTAMP created_at "Creation date"
+        TIMESTAMP updated_at "Last update"
+    }
+
+    reservations {
+        INT id PK "Primary key"
+        INT event_id FK "FK to events.id"
+        INT participant_id FK "FK to participants.id"
+        TIMESTAMP reservation_date "When reserved"
+        ENUM('confirmed', 'pending', 'cancelled', 'waiting_list') status "Reservation status"
+        TEXT comments "Optional remarks"
+    }
+
+    %% ===================== RELATIONSHIPS =====================
+    %% A user may be an organizer
+    users ||--o{ organizers : "has organizer profile"
+
+    %% A user may be a participant
+    users ||--o{ participants : "has participant profile"
+
+    %% An organizer can organize multiple events
+    organizers ||--|{ events : "organizes"
+
+    %% A participant can reserve multiple events
+    participants ||--|{ reservations : "makes reservation"
+
+    %% An event can have many reservations
+    events ||--|{ reservations : "receives reservation"
+    
+```
