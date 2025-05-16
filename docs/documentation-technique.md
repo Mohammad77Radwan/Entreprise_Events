@@ -790,7 +790,7 @@ function getEvent($id) { ... }
 
 ### 1. Interface Docker – Conteneurs actifs
 Affichage des conteneurs Docker actifs liés au projet `entreprise_events`, incluant les services `php`, `mysql`, `phpmyadmin`, `web`, et `db`.
-![Docker - Conteneurs](./docs/image/Docker.jpg)
+![Docker - Conteneurs](../docs/image/Docker.jpg)
 
 ### 2. Interface Docker – Images disponibles
 Liste des images Docker locales utilisées par le projet, incluant les images PHP, MySQL et phpMyAdmin.
