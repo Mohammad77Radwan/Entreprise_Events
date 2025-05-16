@@ -102,6 +102,7 @@
     - [Types de tests :](#types-de-tests-)
     - [Débogage :](#débogage-)
     - [Documentation :](#documentation-)
+  - [16. Galerie d’Images](#16-galerie-dimages)
 
 ---
 
