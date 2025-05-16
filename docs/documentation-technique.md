@@ -166,57 +166,71 @@ Créer une application web de gestion d’événements et de participants.
 
 ```mermaid
 erDiagram
-    USER {
-        int id PK
-        string username
-        string email
-        string password
-        string role
-    }
-    ORGANIZER {
-        int id PK
-        int user_id FK
-        string first_name
-        string last_name
-        string phone
-        string department
-    }
-    PARTICIPANT {
-        int id PK
-        int user_id FK
-        string first_name
-        string last_name
-        string email
-        string phone
-        string department
-    }
-    EVENT {
-        int id PK
-        int organizer_id FK
-        string title
-        text description
-        datetime start_datetime
-        datetime end_datetime
-        string location
-        int max_participants
-        string status
-    }
-    RESERVATION {
-        int id PK
-        int event_id FK
-        int participant_id FK
-        datetime reservation_date
-        string status
-        text comments
+
+    %% ===================== ENTITIES =====================
+    users {
+        INT id PK "Primary key"
+        VARCHAR username "Unique username"
+        VARCHAR email "Unique email address"
+        VARCHAR password "Hashed password"
+        STRING role "User role: admin, organizer, employee"
+        TIMESTAMP created_at "Account creation date"
+        TIMESTAMP updated_at "Last profile update"
     }
 
-    USER ||--o{ ORGANIZER : "1-1"
-    USER ||--o{ PARTICIPANT : "1-1"
-    EVENT ||--o{ RESERVATION : "1-N"
-    PARTICIPANT ||--o{ RESERVATION : "1-N"
+    organizers {
+        INT id PK "Primary key"
+        INT user_id FK "FK to users.id"
+        VARCHAR first_name "Organizer's first name"
+        VARCHAR last_name "Organizer's last name"
+        VARCHAR phone "Phone number"
+        VARCHAR department "Organizer's department"
+        TIMESTAMP created_at "Creation date"
+        TIMESTAMP updated_at "Last update"
+    }
+
+    participants {
+        INT id PK "Primary key"
+        INT user_id FK "FK to users.id"
+        VARCHAR first_name "Participant's first name"
+        VARCHAR last_name "Participant's last name"
+        VARCHAR email "Participant email"
+        VARCHAR phone "Phone number"
+        VARCHAR department "Department"
+        TIMESTAMP created_at "Creation date"
+        TIMESTAMP updated_at "Last update"
+    }
+
+    events {
+        INT id PK "Primary key"
+        INT organizer_id FK "FK to organizers.id"
+        VARCHAR title "Event title"
+        TEXT description "Detailed description"
+        DATETIME start_datetime "Start of event"
+        DATETIME end_datetime "End of event"
+        VARCHAR location "Event location"
+        INT max_participants "Participant limit"
+        STRING status "Status: planned, ongoing, completed, cancelled"
+        TIMESTAMP created_at "Creation date"
+        TIMESTAMP updated_at "Last update"
+    }
+
+    reservations {
+        INT id PK "Primary key"
+        INT event_id FK "FK to events.id"
+        INT participant_id FK "FK to participants.id"
+        TIMESTAMP reservation_date "When reserved"
+        STRING status "Status: confirmed, pending, cancelled, waiting_list"
+        TEXT comments "Optional remarks"
+    }
+
+    %% ===================== RELATIONSHIPS =====================
+    users ||--o{ organizers : "has organizer profile"
+    users ||--o{ participants : "has participant profile"
+    organizers ||--|{ events : "organizes"
+    participants ||--|{ reservations : "makes reservation"
+    events ||--|{ reservations : "receives reservation"
 ```
-
----
 
 ## 5. Architecture du Projet
 
@@ -839,10 +853,10 @@ erDiagram
     %% ===================== ENTITIES =====================
     users {
         INT id PK "Primary key"
-        VARCHAR(50) username "Unique username"
-        VARCHAR(100) email "Unique email address"
-        VARCHAR(255) password "Hashed password"
-        ENUM('admin', 'organizer', 'employee') role "User role"
+        VARCHAR username "Unique username"
+        VARCHAR email "Unique email address"
+        VARCHAR password "Hashed password"
+        STRING role "User role: admin, organizer, employee"
         TIMESTAMP created_at "Account creation date"
         TIMESTAMP updated_at "Last profile update"
     }
@@ -850,10 +864,10 @@ erDiagram
     organizers {
         INT id PK "Primary key"
         INT user_id FK "FK to users.id"
-        VARCHAR(50) first_name "Organizer's first name"
-        VARCHAR(50) last_name "Organizer's last name"
-        VARCHAR(20) phone "Phone number"
-        VARCHAR(50) department "Organizer's department"
+        VARCHAR first_name "Organizer's first name"
+        VARCHAR last_name "Organizer's last name"
+        VARCHAR phone "Phone number"
+        VARCHAR department "Organizer's department"
         TIMESTAMP created_at "Creation date"
         TIMESTAMP updated_at "Last update"
     }
@@ -861,11 +875,11 @@ erDiagram
     participants {
         INT id PK "Primary key"
         INT user_id FK "FK to users.id"
-        VARCHAR(50) first_name "Participant's first name"
-        VARCHAR(50) last_name "Participant's last name"
-        VARCHAR(100) email UNIQUE "Participant email"
-        VARCHAR(20) phone "Phone number"
-        VARCHAR(50) department "Department"
+        VARCHAR first_name "Participant's first name"
+        VARCHAR last_name "Participant's last name"
+        VARCHAR email "Participant email"
+        VARCHAR phone "Phone number"
+        VARCHAR department "Department"
         TIMESTAMP created_at "Creation date"
         TIMESTAMP updated_at "Last update"
     }
@@ -873,13 +887,13 @@ erDiagram
     events {
         INT id PK "Primary key"
         INT organizer_id FK "FK to organizers.id"
-        VARCHAR(100) title "Event title"
+        VARCHAR title "Event title"
         TEXT description "Detailed description"
         DATETIME start_datetime "Start of event"
         DATETIME end_datetime "End of event"
-        VARCHAR(100) location "Event location"
+        VARCHAR location "Event location"
         INT max_participants "Participant limit"
-        ENUM('planned', 'ongoing', 'completed', 'cancelled') status "Event status"
+        STRING status "Status: planned, ongoing, completed, cancelled"
         TIMESTAMP created_at "Creation date"
         TIMESTAMP updated_at "Last update"
     }
@@ -889,24 +903,14 @@ erDiagram
         INT event_id FK "FK to events.id"
         INT participant_id FK "FK to participants.id"
         TIMESTAMP reservation_date "When reserved"
-        ENUM('confirmed', 'pending', 'cancelled', 'waiting_list') status "Reservation status"
+        STRING status "Status: confirmed, pending, cancelled, waiting_list"
         TEXT comments "Optional remarks"
     }
 
     %% ===================== RELATIONSHIPS =====================
-    %% A user may be an organizer
     users ||--o{ organizers : "has organizer profile"
-
-    %% A user may be a participant
     users ||--o{ participants : "has participant profile"
-
-    %% An organizer can organize multiple events
     organizers ||--|{ events : "organizes"
-
-    %% A participant can reserve multiple events
     participants ||--|{ reservations : "makes reservation"
-
-    %% An event can have many reservations
     events ||--|{ reservations : "receives reservation"
-    
 ```
