@@ -803,7 +803,7 @@ Historique des builds Docker pour le service PHP, affichant les différentes ver
 
 ### 4. Modèle relationnel de la base de données
 Diagramme des relations entre les tables : `users`, `organizers`, `participants`, `events`, et `reservations`, illustrant les clés primaires/étrangères.
-![Modèle relationnel](../docs/images/RelationalModel.jpg)
+![Modèle relationnel](../docs/image/RelationalModel.jpg)
 
 ### 5. Page des événements – Vue administrateur
 Page listant les événements avec leurs détails : titre, organisateur, date, lieu, statut et options de visualisation.
