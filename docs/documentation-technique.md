@@ -794,36 +794,36 @@ Affichage des conteneurs Docker actifs liés au projet `entreprise_events`, incl
 
 ### 2. Interface Docker – Images disponibles
 Liste des images Docker locales utilisées par le projet, incluant les images PHP, MySQL et phpMyAdmin.
-![Docker - Images](./docs/image/Docker1.png)
+![Docker - Images](../docs/image/Docker1.png)
 
 ### 3. Interface Docker – Historique des builds
 Historique des builds Docker pour le service PHP, affichant les différentes versions créées lors du développement.
-![Docker - Builds](./docs/image/Docker2.png)
+![Docker - Builds](../docs/image/Docker2.png)
 
 ### 4. Modèle relationnel de la base de données
 Diagramme des relations entre les tables : `users`, `organizers`, `participants`, `events`, et `reservations`, illustrant les clés primaires/étrangères.
-![Modèle relationnel](./docs/images/relational model.jpg)
+![Modèle relationnel](../docs/images/relational model.jpg)
 
 ### 5. Page des événements – Vue administrateur
 Page listant les événements avec leurs détails : titre, organisateur, date, lieu, statut et options de visualisation.
-![Vue événements](./docs/image/Website.png)
+![Vue événements](../docs/image/Website.png)
 
 ### 6. Recherche par date – Filtres dynamiques
 Utilisation d’un calendrier pour filtrer les événements selon une plage de dates précise.
-![Recherche événements](./docs/image/Website1.png)
+![Recherche événements](../docs/image/Website1.png)
 
 ### 7. Filtrage par statut
 Liste déroulante permettant de filtrer les événements selon leur statut : planifié, en cours, terminé ou annulé.
-![Filtrage événements](./docs/image/Website3.png)
+![Filtrage événements](../docs/image/Website3.png)
 
 ### 8. Tableau de bord utilisateur
 Tableau de bord affichant les événements à venir avec informations essentielles : titre, date, lieu et bouton d’action.
-![Tableau de bord](./docs/image/Website4.png)
+![Tableau de bord](../docs/image/Website4.png)
 
 ### 9. Formulaire d’inscription utilisateur
 Formulaire permettant aux nouveaux utilisateurs de s’inscrire avec nom d'utilisateur, e-mail et mot de passe sécurisé.
-![Inscription](./docs/image/Website5.png)
+![Inscription](../docs/image/Website5.png)
 
 ### 10. Formulaire de connexion
 Interface de connexion avec champs pour nom d'utilisateur et mot de passe.
-![Connexion](./docs/image/Website6.png)
+![Connexion](../docs/image/Website6.png)
